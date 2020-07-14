@@ -1,0 +1,21 @@
+{
+	"name": "Errorfolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Errorfolders",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "errorfolder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

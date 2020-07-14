@@ -1,0 +1,51 @@
+{
+	"name": "successfolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sucessfolders",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "outputfolder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CountryID",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Category",
+				"type": "String"
+			},
+			{
+				"name": "CountryName",
+				"type": "String"
+			},
+			{
+				"name": "Waves",
+				"type": "String"
+			},
+			{
+				"name": "TotalTime",
+				"type": "String"
+			},
+			{
+				"name": "Environment",
+				"type": "String"
+			}
+		]
+	}
+}
