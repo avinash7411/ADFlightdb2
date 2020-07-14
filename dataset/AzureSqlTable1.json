@@ -1,0 +1,51 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CountryID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Country",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Category",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CountryName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Waves",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TotalTime",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Environment",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ResponseCount",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "factresponse"
+		}
+	}
+}
