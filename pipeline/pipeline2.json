@@ -23,7 +23,8 @@
 						"childItems"
 					],
 					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings"
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true
 					},
 					"formatSettings": {
 						"type": "DelimitedTextReadSettings"
@@ -54,7 +55,7 @@
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Get Metadata1",
+									"activity": "GM_fileinfo",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -112,7 +113,7 @@
 							]
 						},
 						{
-							"name": "Stored procedure1",
+							"name": "SP_insertlog",
 							"type": "SqlServerStoredProcedure",
 							"dependsOn": [],
 							"policy": {
@@ -141,7 +142,7 @@
 							}
 						},
 						{
-							"name": "Stored procedure2",
+							"name": "SP_Sucess",
 							"type": "SqlServerStoredProcedure",
 							"dependsOn": [
 								{
@@ -177,7 +178,7 @@
 							}
 						},
 						{
-							"name": "Stored procedure3",
+							"name": "SP_Failure",
 							"type": "SqlServerStoredProcedure",
 							"dependsOn": [
 								{
@@ -213,11 +214,11 @@
 							}
 						},
 						{
-							"name": "Copy data1",
+							"name": "CD_sucessfolder",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Stored procedure2",
+									"activity": "SP_Sucess",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -283,11 +284,11 @@
 							]
 						},
 						{
-							"name": "Copy data2",
+							"name": "CD_errorfolder",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Stored procedure3",
+									"activity": "SP_Failure",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -353,11 +354,11 @@
 							]
 						},
 						{
-							"name": "Get Metadata1",
+							"name": "GM_fileinfo",
 							"type": "GetMetadata",
 							"dependsOn": [
 								{
-									"activity": "Stored procedure1",
+									"activity": "SP_insertlog",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -386,7 +387,8 @@
 									"columnCount"
 								],
 								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings"
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
 								},
 								"formatSettings": {
 									"type": "DelimitedTextReadSettings"
