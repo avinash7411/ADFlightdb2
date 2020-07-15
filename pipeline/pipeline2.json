@@ -249,9 +249,16 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Copy data_copy1",
+										"name": "Copy data",
 										"type": "Copy",
-										"dependsOn": [],
+										"dependsOn": [
+											{
+												"activity": "Stored procedure1",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
 										"policy": {
 											"timeout": "7.00:00:00",
 											"retry": 0,
@@ -304,11 +311,11 @@
 										]
 									},
 									{
-										"name": "SP_Sucess_copy1",
+										"name": "SP_Sucess",
 										"type": "SqlServerStoredProcedure",
 										"dependsOn": [
 											{
-												"activity": "Copy data_copy1",
+												"activity": "Copy data",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -340,11 +347,11 @@
 										}
 									},
 									{
-										"name": "CD_sucessfolder_copy1",
+										"name": "CD_sucessfolder",
 										"type": "Copy",
 										"dependsOn": [
 											{
-												"activity": "SP_Sucess_copy1",
+												"activity": "SP_Sucess",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -414,7 +421,7 @@
 										"type": "SqlServerStoredProcedure",
 										"dependsOn": [
 											{
-												"activity": "CD_sucessfolder_copy1",
+												"activity": "CD_sucessfolder",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -433,6 +440,35 @@
 											"storedProcedureParameters": {
 												"filename": {
 													"value": "@item().name",
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "AzureSqlDatabase1",
+											"type": "LinkedServiceReference"
+										}
+									},
+									{
+										"name": "Stored procedure1",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[Filename_validation_dummy]",
+											"storedProcedureParameters": {
+												"filename": {
+													"value": {
+														"value": "@item().name",
+														"type": "Expression"
+													},
 													"type": "String"
 												}
 											}
