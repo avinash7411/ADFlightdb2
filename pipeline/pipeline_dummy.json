@@ -1,18 +1,11 @@
 {
-	"name": "pipeline2",
+	"name": "pipeline_dummy",
 	"properties": {
 		"activities": [
 			{
 				"name": "GM_getfilename",
 				"type": "GetMetadata",
-				"dependsOn": [
-					{
-						"activity": "SP_InsertBatchHeader",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -42,6 +35,12 @@
 				"name": "ForEach",
 				"type": "ForEach",
 				"dependsOn": [
+					{
+						"activity": "SP_InsertBatchHeader",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
 					{
 						"activity": "GM_getfilename",
 						"dependencyConditions": [
@@ -87,11 +86,54 @@
 							}
 						},
 						{
+							"name": "GM_fileinfo",
+							"type": "GetMetadata",
+							"dependsOn": [
+								{
+									"activity": "SP_insertlog",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DelimitedText1",
+									"type": "DatasetReference",
+									"parameters": {
+										"Filename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								},
+								"fieldList": [
+									"columnCount",
+									"structure"
+								],
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							}
+						},
+						{
 							"name": "If Condition1",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
-									"activity": "Lookup1",
+									"activity": "GM_fileinfo",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -100,7 +142,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(activity('Lookup1').output,1)",
+									"value": "@equals(activity('GM_fileinfo').output.columnCount,8)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
@@ -400,95 +442,6 @@
 										}
 									}
 								]
-							}
-						},
-						{
-							"name": "Lookup1",
-							"type": "Lookup",
-							"dependsOn": [
-								{
-									"activity": "GM_fileinfo",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "AzureSqlSource",
-									"sqlReaderStoredProcedureName": "[dbo].[Filename_validation]",
-									"storedProcedureParameters": {
-										"column_count": {
-											"type": "Int32",
-											"value": {
-												"value": "@activity('GM_fileinfo').output.columnCount",
-												"type": "Expression"
-											}
-										},
-										"filename": {
-											"type": "String",
-											"value": {
-												"value": "@item().name",
-												"type": "Expression"
-											}
-										}
-									},
-									"queryTimeout": "02:00:00"
-								},
-								"dataset": {
-									"referenceName": "AzureSqlTable1",
-									"type": "DatasetReference"
-								}
-							}
-						},
-						{
-							"name": "GM_fileinfo",
-							"type": "GetMetadata",
-							"dependsOn": [
-								{
-									"activity": "SP_insertlog",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"dataset": {
-									"referenceName": "DelimitedText1",
-									"type": "DatasetReference",
-									"parameters": {
-										"Filename": {
-											"value": "@item().name",
-											"type": "Expression"
-										}
-									}
-								},
-								"fieldList": [
-									"columnCount"
-								],
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
 							}
 						}
 					]
