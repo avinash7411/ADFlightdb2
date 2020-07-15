@@ -1,0 +1,28 @@
+{
+	"name": "WranglingDataFlow1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "DelimitedText1",
+					"script": "",
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"sinks": [
+				{
+					"name": "Sink1",
+					"dataset": {
+						"referenceName": "successfolder",
+						"type": "DatasetReference"
+					},
+					"script": "sink(input(\n\t\tCountryID as string,\n\t\tCountry as string,\n\t\tCategory as string,\n\t\tCountryName as string,\n\t\tWaves as string,\n\t\tTotalTime as string,\n\t\tEnvironment as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sink1"
+				}
+			]
+		}
+	}
+}
