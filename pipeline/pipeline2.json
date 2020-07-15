@@ -100,12 +100,12 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(activity('Lookup1').output,1)",
+									"value": "@equals(activity('Lookup1').output.firstRow,1)",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
 									{
-										"name": "SP_Failure",
+										"name": "SP_Error",
 										"type": "SqlServerStoredProcedure",
 										"dependsOn": [],
 										"policy": {
@@ -138,7 +138,7 @@
 										"type": "Copy",
 										"dependsOn": [
 											{
-												"activity": "SP_Failure",
+												"activity": "SP_Error",
 												"dependencyConditions": [
 													"Succeeded"
 												]
@@ -569,6 +569,12 @@
 				}
 			}
 		],
+		"variables": {
+			"select": {
+				"type": "String",
+				"defaultValue": "1"
+			}
+		},
 		"annotations": []
 	}
 }
