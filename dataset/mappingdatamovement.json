@@ -5,20 +5,12 @@
 			"referenceName": "mappingdatamovement",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"FIlename": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().FIlename",
-					"type": "Expression"
-				},
+				"fileName": "SF_202001201162_Invoice.csv",
 				"container": "inputfiles"
 			},
 			"columnDelimiter": ",",
