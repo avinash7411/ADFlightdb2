@@ -506,7 +506,7 @@
 									]
 								},
 								{
-									"activity": "LKUP_Getdatabasecolnames",
+									"activity": "LKUP_Getdatabasecolname",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -524,15 +524,19 @@
 										"value": "@item().name",
 										"type": "Expression"
 									},
+									"Filestructure": {
+										"value": "@activity('GM_fileinfo').output.structure",
+										"type": "Expression"
+									},
 									"Databasestracture": {
-										"value": "@activity('LKUP_Getdatabasecolnames').output.value",
+										"value": "@activity('LKUP_Getdatabasecolname').output.value",
 										"type": "Expression"
 									}
 								}
 							}
 						},
 						{
-							"name": "LKUP_Getdatabasecolnames",
+							"name": "LKUP_Getdatabasecolname",
 							"type": "Lookup",
 							"dependsOn": [],
 							"policy": {

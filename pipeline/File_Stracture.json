@@ -8,7 +8,161 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
-					"isSequential": true
+					"items": {
+						"value": "@pipeline().parameters.Filestructure",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Extractfilestracture",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Vfilestracture",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "DataaseFilestracture",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Filestructure",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Extractdatabasestracture",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "VDatabasestracture",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "createconcatfilestracture",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Filestracture",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Stringfilestructure",
+					"value": {
+						"value": "@join(variables('Vfilestracture'),'|')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "createconcatdbstracture",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "DataaseFilestracture",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "StringDBstructure",
+					"value": {
+						"value": "@join(variables('VDatabasestracture'),'|')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Comparestringstracture",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "createconcatfilestracture",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "createconcatdbstracture",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('StringDBstructure'),variables('Stringfilestructure'))",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Stored procedure1",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[validatecolumnstructure]",
+								"storedProcedureParameters": {
+									"filename": {
+										"value": {
+											"value": "@pipeline().parameters.Filename",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "AzureSqlDatabase1",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
 				}
 			}
 		],
@@ -17,11 +171,24 @@
 				"type": "string"
 			},
 			"Filestructure": {
-				"type": "string",
-				"defaultValue": "'awdwqdqwd'"
+				"type": "array"
 			},
 			"Databasestracture": {
-				"type": "string"
+				"type": "array"
+			}
+		},
+		"variables": {
+			"Vfilestracture": {
+				"type": "String"
+			},
+			"VDatabasestracture": {
+				"type": "String"
+			},
+			"Stringfilestructure": {
+				"type": "String"
+			},
+			"StringDBstructure": {
+				"type": "String"
 			}
 		},
 		"annotations": []
