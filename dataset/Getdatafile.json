@@ -5,20 +5,11 @@
 			"referenceName": "AzureBlobStorage2",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"ipfile": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().ipfile",
-					"type": "Expression"
-				},
 				"container": "inputfiles"
 			},
 			"columnDelimiter": ",",
