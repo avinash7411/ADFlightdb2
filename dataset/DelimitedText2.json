@@ -1,24 +1,16 @@
 {
-	"name": "Getdatafile",
+	"name": "DelimitedText2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage2",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"ipfile": {
-				"type": "string"
-			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@dataset().ipfile",
-					"type": "Expression"
-				},
+				"fileName": "FF_202001201160_Invoice.csv",
 				"container": "inputfiles"
 			},
 			"columnDelimiter": ",",
@@ -53,6 +45,10 @@
 			},
 			{
 				"name": "Environment",
+				"type": "String"
+			},
+			{
+				"name": "ResponseCount",
 				"type": "String"
 			}
 		]

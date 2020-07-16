@@ -431,7 +431,10 @@
 											"storedProcedureName": "[dbo].[InsertprocessedFilename]",
 											"storedProcedureParameters": {
 												"filename": {
-													"value": "@item().name",
+													"value": {
+														"value": "@item().name",
+														"type": "Expression"
+													},
 													"type": "String"
 												}
 											}

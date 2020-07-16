@@ -1,0 +1,29 @@
+{
+	"name": "File_Stracture",
+	"properties": {
+		"activities": [
+			{
+				"name": "Filestracture",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"isSequential": true
+				}
+			}
+		],
+		"parameters": {
+			"Filename": {
+				"type": "string"
+			},
+			"Filestructure": {
+				"type": "string",
+				"defaultValue": "'awdwqdqwd'"
+			},
+			"Databasestracture": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}

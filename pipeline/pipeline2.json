@@ -389,7 +389,10 @@
 											"storedProcedureName": "[dbo].[InsertprocessedFilename]",
 											"storedProcedureParameters": {
 												"filename": {
-													"value": "@item().name",
+													"value": {
+														"value": "@item().name",
+														"type": "Expression"
+													},
 													"type": "String"
 												}
 											}
@@ -433,7 +436,8 @@
 									}
 								},
 								"fieldList": [
-									"columnCount"
+									"columnCount",
+									"structure"
 								],
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
@@ -449,7 +453,7 @@
 							"type": "Lookup",
 							"dependsOn": [
 								{
-									"activity": "GM_fileinfo",
+									"activity": "Execute Pipeline1",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -483,6 +487,66 @@
 											}
 										}
 									},
+									"queryTimeout": "02:00:00"
+								},
+								"dataset": {
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
+								}
+							}
+						},
+						{
+							"name": "Execute Pipeline1",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "GM_fileinfo",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "LKUP_Getdatabasecolnames",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "File_Stracture",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Filename": {
+										"value": "@item().name",
+										"type": "Expression"
+									},
+									"Databasestracture": {
+										"value": "@activity('LKUP_Getdatabasecolnames').output.value",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "LKUP_Getdatabasecolnames",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "select Columnstracture from validation_details\nwhere first_name='SF'",
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
