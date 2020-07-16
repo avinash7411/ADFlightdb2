@@ -1,0 +1,55 @@
+{
+	"name": "mappingdatamovement",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "mappingdatamovement",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "inputfiles"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CountryID",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Category",
+				"type": "String"
+			},
+			{
+				"name": "CountryName",
+				"type": "String"
+			},
+			{
+				"name": "Waves",
+				"type": "String"
+			},
+			{
+				"name": "TotalTime",
+				"type": "String"
+			},
+			{
+				"name": "Environment",
+				"type": "String"
+			},
+			{
+				"name": "ResponseCount",
+				"type": "String"
+			}
+		]
+	}
+}
