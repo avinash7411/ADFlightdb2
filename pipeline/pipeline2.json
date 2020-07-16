@@ -144,7 +144,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "select Columnstracture as columnstracture from validation_details\nwhere first_name='SF'",
+									"sqlReaderQuery": "select Columnstracture  from validation_details\nwhere first_name='SF'",
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
