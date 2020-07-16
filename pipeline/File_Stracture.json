@@ -118,7 +118,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('VDatabasestracture'),variables('Vfilestracture'))",
+						"value": "@equals(variables('StringDBstructure'),variables('Stringfilestructure'))",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
