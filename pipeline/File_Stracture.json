@@ -50,7 +50,7 @@
 							"typeProperties": {
 								"variableName": "VDatabasestracture",
 								"value": {
-									"value": "@item()",
+									"value": "@item().Columnstracture",
 									"type": "Expression"
 								}
 							}
