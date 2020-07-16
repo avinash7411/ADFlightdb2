@@ -5,11 +5,20 @@
 			"referenceName": "mappingdatamovement",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"FIlename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().FIlename",
+					"type": "Expression"
+				},
 				"container": "inputfiles"
 			},
 			"columnDelimiter": ",",
