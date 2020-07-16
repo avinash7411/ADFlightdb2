@@ -21,7 +21,18 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "DelimitedText3",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "output2",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -39,7 +50,7 @@
 					"name": "ConditionalSplit1"
 				}
 			],
-			"script": "source(output(\n\t\tCountryID as string,\n\t\tTotalTime as string,\n\t\tEnvironment as string,\n\t\tResponseCount as string,\n\t\tDATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> inputsource\nsource(output(\n\t\tCountryID as string,\n\t\tCountry as string,\n\t\tCategory as string,\n\t\tCountryName as string,\n\t\tWaves as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\ninputsource, source1 join(inputsource@CountryID == source1@CountryID,\n\tjoinType:'inner',\n\tpartitionBy('hash', 1),\n\tbroadcast: 'auto')~> Join1\nJoin1 select(mapColumn(\n\t\tCountryID = inputsource@CountryID,\n\t\tTotalTime,\n\t\tEnvironment,\n\t\tResponseCount,\n\t\tDATE,\n\t\tCountry,\n\t\tCategory,\n\t\tCountryName,\n\t\tWaves\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(CountryName = upper(CountryName)) ~> ModifyColumns1\nModifyColumns1 split(equals(CountryID,'157'),\n\tdisjoint: false) ~> ConditionalSplit1@(filterwithcountryid, othercountryid)\nConditionalSplit1@filterwithcountryid sink(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tCountryID as string,\n\t\tTotalTime as string,\n\t\tEnvironment as string,\n\t\tResponseCount as string,\n\t\tDATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> inputsource\nsource(output(\n\t\tCountryID as string,\n\t\tCountry as string,\n\t\tCategory as string,\n\t\tCountryName as string,\n\t\tWaves as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\ninputsource, source1 join(inputsource@CountryID == source1@CountryID,\n\tjoinType:'inner',\n\tpartitionBy('hash', 1),\n\tbroadcast: 'auto')~> Join1\nJoin1 select(mapColumn(\n\t\tCountryID = inputsource@CountryID,\n\t\tTotalTime,\n\t\tEnvironment,\n\t\tResponseCount,\n\t\tDATE,\n\t\tCountry,\n\t\tCategory,\n\t\tCountryName,\n\t\tWaves\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(CountryName = upper(CountryName)) ~> ModifyColumns1\nModifyColumns1 split(equals(CountryID,'157'),\n\tdisjoint: false) ~> ConditionalSplit1@(filterwithcountryid, othercountryid)\nConditionalSplit1@filterwithcountryid sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['Outputfile1'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1\nConditionalSplit1@othercountryid sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['output2'],\n\tpartitionBy('hash', 1),\n\tdateFormat:'yyyy/MM/dd',\n\ttimestampFormat:'MM/dd/yyyy HH:mm:ss',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink2"
 		}
 	}
 }
