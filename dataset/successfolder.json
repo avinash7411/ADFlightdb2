@@ -5,11 +5,20 @@
 			"referenceName": "sucessfolders",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"file": {
+				"type": "String"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
 				"container": "outputfolder"
 			},
 			"columnDelimiter": ",",
