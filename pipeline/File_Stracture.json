@@ -217,7 +217,13 @@
 							"outputs": [
 								{
 									"referenceName": "Errorfolder",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@pipeline().parameters.Filename",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
