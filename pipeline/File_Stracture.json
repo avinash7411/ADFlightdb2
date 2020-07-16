@@ -196,10 +196,10 @@
 		},
 		"variables": {
 			"Vfilestracture": {
-				"type": "String"
+				"type": "Array"
 			},
 			"VDatabasestracture": {
-				"type": "String"
+				"type": "Array"
 			},
 			"Stringfilestructure": {
 				"type": "String"
