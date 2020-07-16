@@ -355,14 +355,14 @@
 							"column_count": {
 								"type": "Int32",
 								"value": {
-									"value": "@pipeline().parameters.Filename",
+									"value": "@pipeline().parameters.Colcount",
 									"type": "Expression"
 								}
 							},
 							"filename": {
 								"type": "String",
 								"value": {
-									"value": "@pipeline().parameters.Colcount",
+									"value": "@pipeline().parameters.Filename",
 									"type": "Expression"
 								}
 							}
