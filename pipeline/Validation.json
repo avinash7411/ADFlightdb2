@@ -37,7 +37,7 @@
 								"storedProcedureParameters": {
 									"filename": {
 										"value": {
-											"value": "@item().name",
+											"value": "@pipeline().parameters.Filename",
 											"type": "Expression"
 										},
 										"type": "String"
@@ -106,7 +106,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Filename": {
-											"value": "@item().name",
+											"value": "@pipeline().parameters.Filename",
 											"type": "Expression"
 										}
 									}
@@ -163,7 +163,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Filename": {
-											"value": "@item().name",
+											"value": "@pipeline().parameters.Filename",
 											"type": "Expression"
 										}
 									}
@@ -200,7 +200,7 @@
 								"storedProcedureParameters": {
 									"filename": {
 										"value": {
-											"value": "@item().name",
+											"value": "@pipeline().parameters.Filename",
 											"type": "Expression"
 										},
 										"type": "String"
@@ -269,7 +269,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"Filename": {
-											"value": "@item().name",
+											"value": "@pipeline().parameters.Filename",
 											"type": "Expression"
 										}
 									}
@@ -306,7 +306,7 @@
 								"storedProcedureParameters": {
 									"filename": {
 										"value": {
-											"value": "@item().name",
+											"value": "@pipeline().parameters.Filename",
 											"type": "Expression"
 										},
 										"type": "String"

@@ -144,7 +144,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzureSqlSource",
-									"sqlReaderQuery": "select Columnstracture from validation_details\nwhere first_name='SF'",
+									"sqlReaderQuery": "select Columnstracture as columnstracture from validation_details\nwhere first_name='SF'",
 									"queryTimeout": "02:00:00"
 								},
 								"dataset": {
@@ -187,7 +187,7 @@
 										"type": "Expression"
 									},
 									"Databasestracture": {
-										"value": "@activity('LKUP_Getdatabasecolname').output.value",
+										"value": "@activity('LKUP_Getdatabasecolname').output.firstRow.columnstracture",
 										"type": "Expression"
 									},
 									"Colcount": {
