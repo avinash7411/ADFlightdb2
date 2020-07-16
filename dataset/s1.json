@@ -1,0 +1,44 @@
+{
+	"name": "s1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage4",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "SF_202001201161_Invoice.csv",
+				"container": "inputfiles"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CountryID",
+				"type": "String"
+			},
+			{
+				"name": "TotalTime",
+				"type": "String"
+			},
+			{
+				"name": "Environment",
+				"type": "String"
+			},
+			{
+				"name": "ResponseCount",
+				"type": "String"
+			},
+			{
+				"name": "DATE",
+				"type": "String"
+			}
+		]
+	}
+}
