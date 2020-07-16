@@ -154,12 +154,26 @@
 					],
 					"ifTrueActivities": [
 						{
-							"name": "Wait1",
-							"type": "Wait",
+							"name": "Execute Pipeline1",
+							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 1
+								"pipeline": {
+									"referenceName": "Validation",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Filename": {
+										"value": "@pipeline().parameters.Filename",
+										"type": "Expression"
+									},
+									"Colcount": {
+										"value": "@pipeline().parameters.Colcount",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
@@ -175,6 +189,9 @@
 			},
 			"Databasestracture": {
 				"type": "array"
+			},
+			"Colcount": {
+				"type": "int"
 			}
 		},
 		"variables": {

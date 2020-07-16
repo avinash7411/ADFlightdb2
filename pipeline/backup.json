@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "backup",
 	"properties": {
 		"activities": [
 			{
@@ -641,12 +641,6 @@
 				}
 			}
 		],
-		"variables": {
-			"select": {
-				"type": "String",
-				"defaultValue": "1"
-			}
-		},
 		"annotations": []
 	}
 }
