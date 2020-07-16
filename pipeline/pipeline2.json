@@ -188,7 +188,7 @@
 										"type": "Expression"
 									},
 									"Databasestracture": {
-										"value": "@activity('LKUP_Getdatabasecolname').output.firstRow.columnstracture",
+										"value": "@activity('LKUP_Getdatabasecolname').output.value",
 										"type": "Expression"
 									},
 									"Colcount": {
