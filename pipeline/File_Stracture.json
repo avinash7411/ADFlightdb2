@@ -15,8 +15,8 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Extractfilestracture",
-							"type": "SetVariable",
+							"name": "Append variable2",
+							"type": "AppendVariable",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
@@ -31,7 +31,7 @@
 				}
 			},
 			{
-				"name": "DataaseFilestracture",
+				"name": "DatabaseFilestracture",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
@@ -43,8 +43,8 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Extractdatabasestracture",
-							"type": "SetVariable",
+							"name": "Append variable1",
+							"type": "AppendVariable",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
@@ -83,7 +83,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "DataaseFilestracture",
+						"activity": "DatabaseFilestracture",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -118,7 +118,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('StringDBstructure'),variables('Stringfilestructure'))",
+						"value": "@equals(variables('VDatabasestracture'),variables('Vfilestracture'))",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -154,26 +154,12 @@
 					],
 					"ifTrueActivities": [
 						{
-							"name": "FIlevalidationstracture",
-							"type": "ExecutePipeline",
+							"name": "Wait1",
+							"type": "Wait",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"pipeline": {
-									"referenceName": "Validation",
-									"type": "PipelineReference"
-								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"Filename": {
-										"value": "@pipeline().parameters.Filename",
-										"type": "Expression"
-									},
-									"Colcount": {
-										"value": "@pipeline().parameters.Colcount",
-										"type": "Expression"
-									}
-								}
+								"waitTimeInSeconds": 1
 							}
 						}
 					]
