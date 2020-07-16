@@ -1,0 +1,60 @@
+{
+	"name": "DelimitedText4",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage4",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Outputfile1",
+				"container": "outputfolder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "CountryID",
+				"type": "String"
+			},
+			{
+				"name": "TotalTime",
+				"type": "String"
+			},
+			{
+				"name": "Environment",
+				"type": "String"
+			},
+			{
+				"name": "ResponseCount",
+				"type": "String"
+			},
+			{
+				"name": "DATE",
+				"type": "String"
+			},
+			{
+				"name": "Country",
+				"type": "String"
+			},
+			{
+				"name": "Category",
+				"type": "String"
+			},
+			{
+				"name": "CountryName",
+				"type": "String"
+			},
+			{
+				"name": "Waves",
+				"type": "String"
+			}
+		]
+	}
+}
