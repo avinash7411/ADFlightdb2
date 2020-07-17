@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow",
+				"name": "DM_Mapping1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
