@@ -19,7 +19,11 @@
 					"name": "Input2"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "Aggregate1"
@@ -32,9 +36,12 @@
 				},
 				{
 					"name": "Select1"
+				},
+				{
+					"name": "Window1"
 				}
 			],
-			"script": "source(output(\n\t\tCountryID as string,\n\t\tCountry as string,\n\t\tCategory as string,\n\t\tCountryName as string,\n\t\tWaves as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> input1\nsource(output(\n\t\tCountryID as string,\n\t\tTotalTime as string,\n\t\tEnvironment as string,\n\t\tResponseCount as string,\n\t\tDATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Input2\ninput1 aggregate(groupBy(Country),\n\tCategory = count(Category)) ~> Aggregate1\ninput1, Input2 exists(input1@CountryID == Input2@CountryID,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1 keyGenerate(output(ID as long),\n\tstartAt: 1L) ~> SurrogateKey1\nSurrogateKey1 select(mapColumn(\n\t\tID,\n\t\tCCID = CountryID,\n\t\tCountry,\n\t\tCountryName,\n\t\tCategory,\n\t\tWaveid = Waves\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1"
+			"script": "source(output(\n\t\tCountryID as string,\n\t\tCountry as string,\n\t\tCategory as string,\n\t\tCountryName as string,\n\t\tWaves as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> input1\nsource(output(\n\t\tCountryID as string,\n\t\tTotalTime as string,\n\t\tEnvironment as string,\n\t\tResponseCount as string,\n\t\tDATE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> Input2\ninput1 aggregate(groupBy(Country),\n\tCategory = count(Category)) ~> Aggregate1\ninput1, Input2 exists(input1@CountryID == Input2@CountryID,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1 keyGenerate(output(ID as long),\n\tstartAt: 1L) ~> SurrogateKey1\nSurrogateKey1 select(mapColumn(\n\t\tID,\n\t\tCCID = CountryID,\n\t\tCountry,\n\t\tCountryName,\n\t\tCategory,\n\t\tWaveid = Waves\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 window(over(CountryName),\n\tasc(CCID, true),\n\tWaveid = denseRank()) ~> Window1\nAggregate1 sink(skipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
