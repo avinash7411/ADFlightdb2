@@ -1,0 +1,61 @@
+{
+	"name": "Senderrormail",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select count(dummn) from factresponse",
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-38.eastus.logic.azure.com:443/workflows/ff155de1a69d4b8f8d261ea6f1700102/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=LomPHmsguJaTyWaX3rT6MyvN_TyzmTm5J5B4BBqGT0c",
+					"method": "POST",
+					"body": {
+						"value": "{\n    \"DataFactoryName\":\n\"@pipeline().DataFactory\",\n    \"PipelineName\":\n\"@pipeline().Pipeline\",\n    \"ErrorMessage\":\n\"package got failed\",\n    \"EmailTo\":\n\"Avinash.patil@kantar.com\"\n\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
