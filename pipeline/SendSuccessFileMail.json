@@ -28,7 +28,7 @@
 						"Content-Type": "application/json"
 					},
 					"body": {
-						"value": "{\n    \"DataFactoryName\":\n\"@{pipeline().parameters.datafactoryname}\",\n \"FileName\":\n\"@{pipeline().parameters.FileName}\",\n    \"PipelineName\":\n\"@{pipeline().parameters.pipelinename}\",\n    \"ErrorMessage\":\n\"@{pipeline().parameters.ValidationError}\",\n    \"EmailTo\":\n\"Avinash.patil@kantar.com\"}\n",
+						"value": "{\n    \"DataFactoryName\":\n\"@{pipeline().parameters.datafactoryname}\",\n \"FileName\":\n\"@{pipeline().parameters.FileName}\",\n    \"PipelineName\":\n\"@{pipeline().parameters.pipelinename}\",\n    \"ValidationError\":\n\"@{pipeline().parameters.ValidationError}\",\n    \"EmailTo\":\n\"Avinash.patil@kantar.com\"}\n",
 						"type": "Expression"
 					}
 				}
