@@ -331,6 +331,44 @@
 								"referenceName": "AzureSqlDatabase1",
 								"type": "LinkedServiceReference"
 							}
+						},
+						{
+							"name": "Execute Pipeline1_copy1",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "SP_copyfilenamesintodb",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "SendSuccessFileMail",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"Filename": {
+										"value": "@pipeline().parameters.Filename",
+										"type": "Expression"
+									},
+									"datafactoryname": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
+									"pipelinename": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"ValidationError": {
+										"value": "NULL",
+										"type": "Expression"
+									}
+								}
+							}
 						}
 					]
 				}
