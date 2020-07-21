@@ -20,7 +20,18 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-38.eastus.logic.azure.com:443/workflows/ff155de1a69d4b8f8d261ea6f1700102/triggers/request/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Frequest%2Frun&sv=1.0&sig=LomPHmsguJaTyWaX3rT6MyvN_TyzmTm5J5B4BBqGT0c",
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/json"
+					},
+					"body": {
+						"value": "{\n    \"DataFactoryName\":\n\"@{pipeline().parameters.datafactoryname}\",\n    \"PipelineName\":\n\"@{pipeline().parameters.pipelinename}\",\n    \"ErrorMessage\":\n\"@{pipeline().parameters.ValidationError}\",\n    \"EmailTo\":\n\"Avinash.patil@kantar.com\"}\n",
+						"type": "Expression"
+					}
+				}
 			},
 			{
 				"name": "Stored procedure1",
@@ -33,9 +44,40 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[insertingfiletrackinginfo]",
+					"storedProcedureParameters": {
+						"filename": {
+							"value": {
+								"value": "@pipeline().parameters.Filename",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
+		"parameters": {
+			"Filename": {
+				"type": "string"
+			},
+			"datafactoryname": {
+				"type": "string"
+			},
+			"pipelinename": {
+				"type": "string"
+			},
+			"ValidationError": {
+				"type": "string",
+				"defaultValue": null
+			}
+		},
 		"annotations": []
 	}
 }
