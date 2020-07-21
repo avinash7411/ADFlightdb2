@@ -351,10 +351,6 @@
 								},
 								"waitOnCompletion": true,
 								"parameters": {
-									"Filename": {
-										"value": "@pipeline().parameters.Filename",
-										"type": "Expression"
-									},
 									"datafactoryname": {
 										"value": "@pipeline().DataFactory",
 										"type": "Expression"
